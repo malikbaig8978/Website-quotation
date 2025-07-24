@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Professional Quotation Generator - Web Development Projects</title>
+    <meta
+      name="description"
+      content="Generate comprehensive, professional quotations for web development projects with our intelligent pricing calculator. Real-time cost estimates with detailed breakdowns."
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Add these script tags for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="header-background"></div>
+      <div class="container">
+        <div class="header-content">
+          <div class="header-icon">
+            <i class="fas fa-calculator"></i>
+          </div>
+          <h1 class="header-title">Professional Quotation Generator</h1>
+          <p class="header-subtitle">
+            Create comprehensive, professional quotations for web development
+            projects with our intelligent pricing calculator. Get instant cost
+            estimates with detailed breakdowns and professional documentation.
+          </p>
+          <div class="header-features">
+            <div class="feature-badge">
+              <span class="badge-icon">✓</span> Real-time Pricing
+            </div>
+            <div class="feature-badge">
+              <span class="badge-icon">✓</span> Detailed Breakdown
+            </div>
+            <div class="feature-badge">
+              <span class="badge-icon">✓</span> Professional PDF
+            </div>
+            <div class="feature-badge">
+              <span class="badge-icon">✓</span> Multi-currency Support
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="floating-elements">
+        <div class="floating-element floating-1"></div>
+        <div class="floating-element floating-2"></div>
+        <div class="floating-element floating-3"></div>
+        <div class="floating-element floating-4"></div>
+      </div>
+    </header>
+
+    <!-- Progress Indicator -->
+    <div class="progress-container" id="progressContainer">
+      <div class="container">
+        <div class="progress-header">
+          <div class="progress-info">
+            <div class="progress-badge">QUOTATION BUILDER</div>
+            <span class="progress-label">Form Progress</span>
+          </div>
+          <div class="progress-stats">
+            <span class="progress-percentage" id="progressPercentage">0%</span>
+            <div class="progress-status">Complete</div>
+          </div>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-messages">
+          <span>Just getting started...</span>
+          <span id="progressMessage">Let's begin!</span>
+          <span>Ready to generate!</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Form Container -->
+    <main class="main-container">
+      <div class="container">
+        <form id="quotationForm" class="quotation-form">
+          <!-- Client Information Section -->
+          <section class="form-section animate-fade-in" data-section="client">
+            <div class="section-card">
+              <div class="section-header">
+                <div class="section-icon client-icon">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="section-title-group">
+                  <h2 class="section-title">Client Information</h2>
+                  <p class="section-subtitle">
+                    Enter your contact details and project information
+                  </p>
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <div class="form-group required">
+                  <label for="clientName">Client Name</label>
+                  <input
+                    type="text"
+                    id="clientName"
+                    name="clientName"
+                    required
+                  />
+                </div>
+
+                <div class="form-group required">
+                  <label for="companyName">Company Name</label>
+                  <input
+                    type="text"
+                    id="companyName"
+                    name="companyName"
+                    required
+                  />
+                </div>
+
+                <div class="form-group required">
+                  <label for="projectTitle">Project Title</label>
+                  <input
+                    type="text"
+                    id="projectTitle"
+                    name="projectTitle"
+                    required
+                  />
+                </div>
+
+                <div class="form-group required">
+                  <label for="email">Email Address</label>
+                  <input type="email" id="email" name="email" required />
+                </div>
+
+                <div class="form-group">
+                  <label for="phone">Phone Number</label>
+                  <input type="tel" id="phone" name="phone" />
+                </div>
+
+                <div class="form-group">
+                  <label for="address">Address</label>
+                  <input type="text" id="address" name="address" />
+                </div>
+
+                <!-- <div class="form-group">
+                                    <label for="budgetRange"
+                                        >Budget Range</label
+                                    >
+                                    <select id="budgetRange" name="budgetRange">
+                                        <option value="">
+                                            Select budget range
+                                        </option>
+                                        <option value="50000-100000">
+                                            ₹50,000 - ₹1,00,000
+                                        </option>
+                                        <option value="100000-200000">
+                                            ₹1,00,000 - ₹2,00,000
+                                        </option>
+                                        <option value="200000-350000">
+                                            ₹2,00,000 - ₹3,50,000
+                                        </option>
+                                        <option value="350000-500000">
+                                            ₹3,50,000 - ₹5,00,000
+                                        </option>
+                                        <option value="500000+">
+                                            ₹5,00,000+
+                                        </option>
+                                    </select>
+                                </div> -->
+
+                <div class="form-group">
+                  <label for="preferredStartDate">Preferred Start Date</label>
+                  <input
+                    type="date"
+                    id="preferredStartDate"
+                    name="preferredStartDate"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Project Overview Section -->
+          <section class="form-section animate-fade-in" data-section="project">
+            <div class="section-card">
+              <div class="section-header">
+                <div class="section-icon project-icon">
+                  <i class="fas fa-network-wired"></i>
+                </div>
+                <div class="section-title-group">
+                  <h2 class="section-title">Project Overview</h2>
+                  <p class="section-subtitle">
+                    Define your project type, target audience and main
+                    objectives
+                  </p>
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <div class="form-group required">
+                  <label for="projectType">Project Type</label>
+                  <select id="projectType" name="projectType" required>
+                    <option value="">Select project type</option>
+                    <option value="website">Website</option>
+                    <option value="mobile">WebApp</option>
+                    <option value="both">Both</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="targetAudience">Target Audience</label>
+                  <select
+                    name="targetAudience"
+                    id="targetAudience"
+                    class="form-control"
+                  >
+                    <option value="">Select target audience</option>
+                    <option value="b2b">B2B (Business to Business)</option>
+                    <option value="b2c">B2C (Business to Consumer)</option>
+                    <option value="internal">Internal Use</option>
+                    <option value="international">
+                      International / Multilingual
+                    </option>
+                    <option value="government">
+                      Government / Public Sector
+                    </option>
+                    <option value="nonprofit">Non-Profit / NGO</option>
+                    <option value="educational">Educational / Academic</option>
+                    <option value="startups">Startups / Entrepreneurs</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Device Compatibility</label>
+                  <div class="checkbox-group">
+                    <label class="checkbox-item">
+                      <input
+                        type="checkbox"
+                        name="deviceCompatibility"
+                        value="desktop"
+                        checked
+                      />
+                      <span class="checkmark"></span>
+                      💻Desktop
+                    </label>
+                    <label class="checkbox-item">
+                      <input
+                        type="checkbox"
+                        name="deviceCompatibility"
+                        value="tablet"
+                        checked
+                      />
+                      <span class="checkmark"></span>
+                      📱Tablet
+                    </label>
+                    <label class="checkbox-item">
+                      <input
+                        type="checkbox"
+                        name="deviceCompatibility"
+                        value="mobile"
+                        checked
+                      />
+                      <span class="checkmark"></span>
+                      📱Mobile
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group full-width">
+                  <label for="projectGoal">Project Goal & Objectives</label>
+                  <textarea
+                    id="projectGoal"
+                    name="projectGoal"
+                    rows="3"
+                    placeholder="Describe the main goals and objectives of your project..."
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Website Type & Structure Section -->
+          <section class="form-section animate-fade-in" data-section="website">
+            <div class="section-card">
+              <div class="section-header">
+                <div class="section-icon website-icon">
+                  <i class="fas fa-globe"></i>
+                </div>
+                <div class="section-title-group">
+                  <h2 class="section-title">Website Type & Structure</h2>
+                  <p class="section-subtitle">
+                    Choose the type of website and core functionality you need
+                  </p>
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <div class="form-group">
+                  <label
+                    >Website Type <span style="color: #e53e3e">*</span></label
+                  >
+                  <select
+                    name="websiteType"
+                    id="websiteType"
+                    class="form-control"
+                    required
+                  >
+                    <option value="">Select website type</option>
+                    <option value="informational">
+                      🏢Informational / Business Website
+                    </option>
+                    <option value="ecommerce">🛒E-Commerce Store</option>
+                    <option value="booking">
+                      📅Booking / Appointment System
+                    </option>
+                    <option value="membership">
+                      🧑‍🤝‍🧑Membership / Community Platform
+                    </option>
+                    <option value="dashboard">
+                      📊Internal Tool / Dashboard
+                    </option>
+                    <option value="portfolio">
+                      🎨Portfolio / Blog Website
+                    </option>
+                    <option value="realestate">🏠Real-e-state</option>
+                    <option value="healthcare">🏥Healthcare</option>
+                    <option value="socialmedia">
+                      👥Social Media Platforms
+                    </option>
+                    <option value="learningmanagementsystem">
+                      📚Learning-Management-System
+                    </option>
+                    <option value="fintechapplications">
+                      💳Fintech-applications
+                    </option>
+                    <option value="saasproduct">🌐Saas Products</option>
+                    <option value="marketplace">🏪MarketPlace</option>
+                    <option value="newsmagzines">📰News / Magzines</option>
+                  </select>
+                </div>
+
+                <div class="form-group required">
+                  <label
+                    >Performance Level <span style="color: #e53e3e"></span
+                  ></label>
+                  <select
+                    name="performanceLevel"
+                    id="performanceLevel"
+                    class="form-control"
+                    required
+                  >
+                    <option value="">Select performance level</option>
+                    <option value="basic">
+                      ⚡ Basic Performance (Standard loading)
+                    </option>
+                    <option value="optimized">
+                      🚀 Optimized Performance (Fast loading)
+                    </option>
+                    <option value="high_performance">
+                      ⚡ High Performance (Very fast loading)
+                    </option>
+                    <option value="enterprise">
+                      🏆 Enterprise Performance (Ultra-fast loading)
+                    </option>
+                  </select>
+                </div>
+
+                <div class="form-group required">
+                  <label for="logoDesign">Logo Design Requirements</label>
+                  <select
+                    id="logoDesign"
+                    name="logoDesign"
+                    class="form-control"
+                  >
+                    <option value="">Select option...</option>
+                    <option value="no">✅ No, I have a logo</option>
+                    <option value="basic">🎨 Basic Logo Design</option>
+                    <option value="premium">✨ Premium Logo Design</option>
+                    <option value="complete_branding">
+                      🏆 Complete Brand Identity Package
+                    </option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="numberOfPages">Number of Pages</label>
+                  <select id="numberOfPages" name="numberOfPages">
+                    <option value="">Select page count</option>
+                    <option value="1-5">📄1-5 Pages</option>
+                    <option value="6-10">📊6-10 Pages</option>
+                    <option value="11-20">📖11-20 Pages</option>
+                    <option value="20+">📚20+ Pages</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="accessibilityCompliance"
+                    >Accessibility Compliance</label
+                  >
+                  <select
+                    id="accessibilityCompliance"
+                    name="accessibilityCompliance"
+                  >
+                    <option value="">Select accessibility level</option>
+                    <option value="none">⊘None Required</option>
+                    <option value="basic">♿Basic Accessibility</option>
+                    <option value="wcag">🥇Full WCAG 2.1 Compliance</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Multi-language Support</label>
+                  <div
+                    class="searchable-select"
+                    data-placeholder="Search languages..."
+                  >
+                    <input
+                      type="text"
+                      class="search-input"
+                      placeholder="Search languages..."
+                    />
+                    <div class="options-container">
+                      <label class="option-item">
+                        <input
+                          type="checkbox"
+                          name="multilingualSupport"
+                          value="english"
+                        />
+                        <span class="option-text">English</span>
+                      </label>
+                      <label class="option-item">
+                        <input
+                          type="checkbox"
+                          name="multilingualSupport"
+                          value="hindi"
+                        />
+                        <span class="option-text">Hindi</span>
+                      </label>
+                      <label class="option-item">
+                        <input
+                          type="checkbox"
+                          name="multilingualSupport"
+                          value="spanish"
+                        />
+                        <span class="option-text">Spanish</span>
+                      </label>
+                      <label class="option-item">
+                        <input
+                          type="checkbox"
+                          name="multilingualSupport"
+                          value="french"
+                        />
+                        <span class="option-text">French</span>
+                      </label>
+                      <label class="option-item">
+                        <input
+                          type="checkbox"
+                          name="multilingualSupport"
+                          value="german"
+                        />
+                        <span class="option-text">German</span>
+                      </label>
+                      <label class="option-item">
+                        <input
+                          type="checkbox"
+                          name="multilingualSupport"
+                          value="chinese"
+                        />
+                        <span class="option-text">Chinese</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Technology Stack Section -->
+          <section
+            class="form-section animate-fade-in"
+            data-section="technology"
+          >
+            <div class="section-card">
+              <div class="section-header">
+                <div class="section-icon technology-icon">
+                  <i class="fas fa-code"></i>
+                </div>
+                <div class="section-title-group">
+                  <h2 class="section-title">Technology Stack</h2>
+                  <p class="section-subtitle">
+                    Choose the technologies for your project development
+                  </p>
+                </div>
+              </div>
+
+              <div class="technology-grid">
+                <!-- Frontend Technologies -->
+                <div class="tech-category">
+                  <h4><i class="fas fa-desktop"></i> Frontend Technologies</h4>
+                  <div class="form-group">
+                    <label for="frontendTech">Frontend Framework</label>
+                    <select
+                      id="frontendTech"
+                      name="frontendTech"
+                      class="form-control"
+                    >
+                      <option value="">Select frontend technology...</option>
+                      <option value="react">⚛️ React.js</option>
+                      <option value="vue">💚 Vue.js</option>
+                      <option value="angular">🔺 Angular</option>
+                      <option value="nextjs">⚡ Next.js</option>
+                      <option value="nuxtjs">💚 Nuxt.js</option>
+                      <option value="svelte">🧡 Svelte</option>
+                      <option value="vanilla">📝 Vanilla JavaScript</option>
+                      <option value="jquery">💙 jQuery</option>
+                      <option value="bootstrap">🎨 Bootstrap + HTML/CSS</option>
+                      <option value="tailwind">🎨 Tailwind CSS + HTML</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Backend Technologies -->
+                <div class="tech-category">
+                  <h4><i class="fas fa-server"></i> Backend Technologies</h4>
+                  <div class="form-group">
+                    <label for="backendTech">Backend Framework</label>
+                    <select
+                      id="backendTech"
+                      name="backendTech"
+                      class="form-control"
+                    >
+                      <option value="">Select backend technology...</option>
+                      <option value="nodejs">💚 Node.js + Express</option>
+                      <option value="python_django">🐍 Python + Django</option>
+                      <option value="python_flask">🐍 Python + Flask</option>
+                      <option value="python_fastapi">
+                        🚀 Python + FastAPI
+                      </option>
+                      <option value="php_laravel">🐘 PHP + Laravel</option>
+                      <option value="php_symfony">🐘 PHP + Symfony</option>
+                      <option value="php_codeigniter">
+                        🐘 PHP + CodeIgniter
+                      </option>
+                      <option value="ruby_rails">💎 Ruby on Rails</option>
+                      <option value="java_spring">☕ Java + Spring Boot</option>
+                      <option value="csharp_dotnet">🔷 C# + .NET Core</option>
+                      <option value="go">🔵 Go (Golang)</option>
+                      <option value="rust">🦀 Rust</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Database Technologies -->
+                <div class="tech-category">
+                  <h4><i class="fas fa-database"></i> Database Technologies</h4>
+                  <div class="form-group">
+                    <label for="databaseTech">Database</label>
+                    <select
+                      id="databaseTech"
+                      name="databaseTech"
+                      class="form-control"
+                    >
+                      <option value="">Select database...</option>
+                      <option value="mysql">🐬 MySQL</option>
+                      <option value="postgresql">🐘 PostgreSQL</option>
+                      <option value="mongodb">🍃 MongoDB</option>
+                      <option value="sqlite">📦 SQLite</option>
+                      <option value="redis">🔴 Redis</option>
+                      <option value="mariadb">🦭 MariaDB</option>
+                      <option value="oracle">🔶 Oracle Database</option>
+                      <option value="mssql">🔷 Microsoft SQL Server</option>
+                      <option value="dynamodb">⚡ AWS DynamoDB</option>
+                      <option value="firestore">🔥 Google Firestore</option>
+                      <option value="cassandra">🔗 Apache Cassandra</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Cloud & Hosting -->
+                <div class="tech-category">
+                  <h4><i class="fas fa-cloud"></i> Cloud & Hosting</h4>
+                  <div class="form-group">
+                    <label for="hostingTech">Hosting Platform</label>
+                    <select
+                      id="hostingTech"
+                      name="hostingTech"
+                      class="form-control"
+                    >
+                      <option value="">Select hosting platform...</option>
+                      <option value="aws">☁️ Amazon Web Services (AWS)</option>
+                      <option value="azure">⭐ Microsoft Azure</option>
+                      <option value="gcp">🌐 Google Cloud Platform</option>
+                      <option value="vercel">▲ Vercel</option>
+                      <option value="netlify">🌊 Netlify</option>
+                      <option value="heroku">💜 Heroku</option>
+                      <option value="digitalocean">🌊 DigitalOcean</option>
+                      <option value="linode">🔵 Linode</option>
+                      <option value="cloudflare">🔶 Cloudflare Pages</option>
+                      <option value="shared_hosting">🏠 Shared Hosting</option>
+                      <option value="vps">🖥️ VPS Hosting</option>
+                      <option value="dedicated">🏢 Dedicated Server</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- DevOps & Tools -->
+                <div class="tech-category">
+                  <h4><i class="fas fa-tools"></i> DevOps & Tools</h4>
+                  <div class="form-group">
+                    <label for="devopsTech">DevOps Tools</label>
+                    <select
+                      id="devopsTech"
+                      name="devopsTech"
+                      class="form-control"
+                    >
+                      <option value="">Select DevOps tools...</option>
+                      <option value="docker">🐳 Docker</option>
+                      <option value="kubernetes">⚡ Kubernetes</option>
+                      <option value="jenkins">🔧 Jenkins CI/CD</option>
+                      <option value="github_actions">🚀 GitHub Actions</option>
+                      <option value="gitlab_ci">🦊 GitLab CI/CD</option>
+                      <option value="terraform">🏗️ Terraform</option>
+                      <option value="ansible">📋 Ansible</option>
+                      <option value="nginx">🌐 Nginx</option>
+                      <option value="apache">🪶 Apache</option>
+                      <option value="basic_deployment">
+                        📦 Basic Deployment
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Additional Services -->
+                <div class="tech-category">
+                  <h4>
+                    <i class="fas fa-puzzle-piece"></i> Additional Services
+                  </h4>
+                  <div class="form-group">
+                    <label for="additionalServices">Additional Services</label>
+                    <select
+                      id="additionalServices"
+                      name="additionalServices"
+                      class="form-control"
+                    >
+                      <option value="">Select additional services...</option>
+                      <option value="cdn">
+                        ⚡ Content Delivery Network (CDN)
+                      </option>
+                      <option value="ssl">🔒 SSL Certificate</option>
+                      <option value="monitoring">
+                        📊 Application Monitoring
+                      </option>
+                      <option value="backup">💾 Automated Backup</option>
+                      <option value="load_balancer">⚖️ Load Balancer</option>
+                      <option value="caching">🚀 Advanced Caching</option>
+                      <option value="search_engine">
+                        🔍 Search Engine (Elasticsearch)
+                      </option>
+                      <option value="email_service">
+                        📧 Email Service Integration
+                      </option>
+                      <option value="analytics">📈 Advanced Analytics</option>
+                      <option value="security_audit">🛡️ Security Audit</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Core Functionality Section -->
+          <section
+            class="form-section animate-fade-in"
+            data-section="functionality"
+          >
+            <div class="section-card">
+              <div class="section-header">
+                <div class="section-icon functionality-icon">
+                  <i class="fas fa-cogs"></i>
+                </div>
+                <div class="section-title-group">
+                  <h2 class="section-title">Core Functionality</h2>
+                  <p class="section-subtitle">
+                    Select the essential features and functionality for your
+                    website
+                  </p>
+                </div>
+              </div>
+
+              <div class="feature-grid">
+                <div class="feature-category">
+                  <h4>User Management</h4>
+                  <label class="toggle-item">
+                    <input type="checkbox" name="adminPanel" />
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-label">Admin Panel & CMS</span>
+                  </label>
+                  <label class="toggle-item">
+                    <input type="checkbox" name="userAuthentication" />
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-label">User Authentication System</span>
+                  </label>
+                  <label class="toggle-item">
+                    <input type="checkbox" name="roleBasedAccess" />
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-label">Role-based Access Control</span>
+                  </label>
+                </div>
+
+                <div class="feature-category">
+                  <h4>E-commerce Features</h4>
+                  <label class="toggle-item">
+                    <input type="checkbox" name="productManagement" />
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-label">Product Management</span>
+                  </label>
+                  <label class="toggle-item">
+                    <input type="checkbox" name="shoppingCart" />
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-label">Shopping Cart & Checkout</span>
+                  </label>
+                  <label class="toggle-item">
+                    <input type="checkbox" name="orderTracking" />
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-label">Order Tracking System</span>
+                  </label>
+                  <label class="toggle-item">
+                    <input type="checkbox" name="inventoryManagement" />
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-label">Inventory Management</span>
+                  </label>
+                </div>
+
+                <div class="feature-category">
+                  <h4>Content & Communication</h4>
+                  <label class="toggle-item">
+                    <input type="checkbox" name="blogNewsModule" />
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-label">Blog & News Module</span>
+                  </label>
+                  <label class="toggle-item">
+                    <input type="checkbox" name="bookingCalendarModule" />
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-label">Booking & Calendar System</span>
+                  </label>
+                  <label class="toggle-item">
+                    <input type="checkbox" name="liveChatChatbot" />
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-label">Live Chat / Chatbot</span>
+                  </label>
+                  <label class="toggle-item">
+                    <input type="checkbox" name="socialMediaIntegration" />
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-label">Social Media Integration</span>
+                  </label>
+                </div>
+
+                <div class="feature-category">
+                  <h4>Analytics & SEO</h4>
+                  <label class="toggle-item">
+                    <input type="checkbox" name="googleAnalytics" />
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-label"
+                      >Google Analytics & Tracking</span
+                    >
+                  </label>
+                  <label class="toggle-item">
+                    <input type="checkbox" name="seoSetup" />
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-label">Advanced SEO Setup</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="cmsRequired">Content Management System</label>
+                  <select id="cmsRequired" name="cmsRequired">
+                    <option value="">Select CMS preference</option>
+                    <option value="wordpress">WordPress</option>
+                    <option value="strapi">Strapi</option>
+                    <option value="custom">Custom CMS</option>
+                    <option value="none">No CMS Required</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Payment Gateway Integration</label>
+                  <div
+                    class="searchable-select"
+                    data-placeholder="Search payment gateways..."
+                  >
+                    <input
+                      type="text"
+                      class="search-input"
+                      placeholder="Search payment gateways..."
+                    />
+                    <div class="options-container">
+                      <label class="option-item">
+                        <input
+                          type="checkbox"
+                          name="paymentGateway"
+                          value="stripe"
+                        />
+                        <span class="option-text">Stripe</span>
+                      </label>
+                      <label class="option-item">
+                        <input
+                          type="checkbox"
+                          name="paymentGateway"
+                          value="paypal"
+                        />
+                        <span class="option-text">PayPal</span>
+                      </label>
+                      <label class="option-item">
+                        <input
+                          type="checkbox"
+                          name="paymentGateway"
+                          value="razorpay"
+                        />
+                        <span class="option-text">Razorpay</span>
+                      </label>
+                      <label class="option-item">
+                        <input
+                          type="checkbox"
+                          name="paymentGateway"
+                          value="payu"
+                        />
+                        <span class="option-text">PayU</span>
+                      </label>
+                      <label class="option-item">
+                        <input
+                          type="checkbox"
+                          name="paymentGateway"
+                          value="ccavenue"
+                        />
+                        <span class="option-text">CCAvenue</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Cost Estimation Display -->
+          <section class="cost-estimation-section">
+            <div class="cost-card">
+              <div class="cost-header">
+                <div class="cost-icon">
+                  <i class="fas fa-calculator"></i>
+                </div>
+                <div>
+                  <h2 class="cost-title">Live Cost Estimation</h2>
+                  <p class="cost-subtitle">
+                    Real-time pricing based on your selections
+                  </p>
+                </div>
+              </div>
+
+              <div class="cost-breakdown">
+                <div class="cost-item">
+                  <div class="cost-icon-small">🏗️</div>
+                  <h3>Base Development</h3>
+                  <p class="cost-amount" id="baseCost">₹0</p>
+                  <p class="cost-description">Core website functionality</p>
+                </div>
+
+                <div class="cost-item">
+                  <div class="cost-icon-small">⚡</div>
+                  <h3>Advanced Features</h3>
+                  <p class="cost-amount" id="featuresCost">₹0</p>
+                  <p class="cost-description">
+                    Custom functionality & integrations
+                  </p>
+                </div>
+
+                <div class="cost-item total-cost">
+                  <div class="cost-icon-small">💰</div>
+                  <h3>Total Investment</h3>
+                  <p class="cost-amount total" id="totalCost">₹0</p>
+                  <p class="cost-description">Complete project cost</p>
+                </div>
+              </div>
+
+              <div class="cost-details">
+                <div class="cost-detail-item">
+                  <span class="detail-label">Estimated Timeline</span>
+                  <span class="detail-value" id="timeline">4-6 weeks</span>
+                </div>
+                <div class="cost-detail-item">
+                  <span class="detail-label">Payment Terms</span>
+                  <span class="detail-value">40-30-30%</span>
+                </div>
+              </div>
+
+              <div class="generate-quote">
+                <button type="button" class="quote-btn" id="generateQuoteBtn">
+                  <i class="fas fa-file-alt"></i>
+                  Generate Professional Quotation
+                </button>
+                <p class="quote-description">
+                  Get a detailed PDF quotation with project breakdown, terms &
+                  conditions
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Quotation Summary Section -->
+          <section
+            class="summary-section"
+            id="summarySection"
+            style="display: none"
+          >
+            <div class="summary-card">
+              <div class="summary-header">
+                <div class="summary-icon">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+                <div>
+                  <h2 class="summary-title">Quotation Summary</h2>
+                  <p class="summary-subtitle">
+                    Complete overview of your project requirements and pricing
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </form>
+
+        <div class="summary-content" id="summaryContent">
+          <!-- Summary content will be dynamically generated -->
+        </div>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script src="pdf.js"></script>
+  </body>
+</html>
