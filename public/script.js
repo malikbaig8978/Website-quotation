@@ -713,6 +713,9 @@ function generateQuotation() {
     summarySection.style.opacity = "1";
     summarySection.style.transform = "translateY(0)";
   }, 100);
+  setTimeout(() => {
+    adjustCostTextSize();
+  }, 100);
 }
 
 // Validate form before generating quotation
@@ -1199,6 +1202,30 @@ function generateSummaryHTML() {
 
   return html;
 }
+// Add this function after generateSummaryHTML()
+function adjustCostTextSize() {
+  const costValues = document.querySelectorAll('.cost-value');
+  
+  costValues.forEach(element => {
+    const text = element.textContent;
+    const container = element.parentElement;
+    
+    // Reset font size
+    element.style.fontSize = '';
+    
+    // Check if text is overflowing
+    if (element.scrollWidth > container.clientWidth) {
+      let fontSize = parseFloat(window.getComputedStyle(element).fontSize);
+      
+      // Reduce font size until it fits
+      while (element.scrollWidth > container.clientWidth && fontSize > 10) {
+        fontSize -= 1;
+        element.style.fontSize = fontSize + 'px';
+      }
+    }
+  });
+}
+
 
 // Animate elements on scroll
 function animateOnScroll() {
@@ -1834,7 +1861,7 @@ const summaryStyles = `
     
     .feature-list {
         grid-template-columns: 1fr;
-    }
+    }   
     
     .cost-summary-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -1856,3 +1883,5 @@ const summaryStyles = `
 
 // Inject summary styles
 document.head.insertAdjacentHTML("beforeend", summaryStyles);
+// Also call on window resize
+window.addEventListener('resize', adjustCostTextSize);
