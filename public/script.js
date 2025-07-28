@@ -1885,3 +1885,44 @@ const summaryStyles = `
 document.head.insertAdjacentHTML("beforeend", summaryStyles);
 // Also call on window resize
 window.addEventListener('resize', adjustCostTextSize);
+
+// ===== THEME SYSTEM =====
+
+// Initialize theme system
+function initializeTheme() {
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', toggleTheme);
+  }
+}
+
+// Toggle between light and dark theme
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  
+  // Add a subtle animation effect
+  document.body.style.transition = 'all 0.3s ease';
+  setTimeout(() => {
+    document.body.style.transition = '';
+  }, 300);
+}
+
+// Call theme initialization when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Your existing initialization code...
+  initializeForm();
+  setupEventListeners();
+  setupSearchableSelects();
+  setupProgressTracking();
+  animateOnScroll();
+  
+  // Initialize theme system
+  initializeTheme();
+});
